@@ -1,0 +1,170 @@
+:root {
+  --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-size: 14px;
+  --font-weight-medium: 600;
+  --font-weight-normal: 400;
+
+  --radius: 0.75rem;
+
+  --neutral-100: #f1f5f9;
+  --neutral-200: #e2e8f0;
+  --neutral-500: #64748b;
+  --surface-light: #ffffff;
+  --surface-border-light: var(--neutral-200);
+
+  --shadow-base: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+  /* =========================
+     App palette (default: dark)
+     ========================= */
+  --app-bg: #0f172a;
+  --app-surface: #1e293b;
+  --app-text: #ffffff;
+  --app-text-muted: #94a3b8;
+  --app-success: #22c55e;
+  --app-danger: #ef4444;
+  --app-warning: #f59e0b;
+  --app-running: #3b82f6;
+  --app-accent: #3b82f6;
+  --app-tag: #334155;
+  --app-hover: #1e2535;
+  --app-table-hover: #1c2a3a;
+  --app-border: #374151;
+
+  /* =========================
+     Semantic tokens (shadcn/ui + app)
+     ========================= */
+  --background: var(--app-bg);
+  --foreground: var(--app-text);
+
+  --card: var(--app-surface);
+  --card-foreground: var(--app-text);
+
+  --popover: var(--app-surface);
+  --popover-foreground: var(--app-text);
+
+  --primary: var(--app-accent);
+  --primary-foreground: #ffffff;
+
+  --secondary: var(--app-tag);
+  --secondary-foreground: var(--app-text);
+
+  --muted: var(--app-surface);
+  --muted-foreground: var(--app-text-muted);
+
+  --accent: var(--app-accent);
+  --accent-foreground: var(--app-text);
+
+  --destructive: var(--app-danger);
+  --destructive-foreground: var(--app-text);
+
+  --border: var(--app-border);
+  --input: var(--app-surface);
+  --input-background: var(--app-surface);
+  --switch-background: var(--app-border);
+  --ring: var(--app-accent);
+
+  --chart-1: var(--app-accent);
+  --chart-2: var(--app-success);
+  --chart-3: var(--app-text-muted);
+  --chart-4: #f59e0b;
+  --chart-5: var(--app-danger);
+  --chart-6: #8b5cf6;
+
+  --primary-strong: color-mix(in srgb, var(--primary) 85%, white 15%);
+  --primary-soft: color-mix(in srgb, var(--primary) 10%, transparent 90%);
+
+  /* Sidebar */
+  --sidebar: var(--app-bg);
+  --sidebar-foreground: var(--app-text);
+  --sidebar-primary: var(--app-text);
+  --sidebar-primary-foreground: var(--app-bg);
+  --sidebar-accent: var(--app-accent);
+  --sidebar-accent-foreground: var(--app-text);
+  --sidebar-border: var(--app-border);
+  --sidebar-ring: var(--app-accent);
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+.light {
+  color-scheme: light;
+  /* Grey + warm neutrals, with blue accents */
+  --app-bg: #e7e7f4;
+  --app-surface: #e9e9f8;
+  --app-text: #4a4a4f;
+  --app-text-muted: #6b7280;
+  --app-success: #166534;
+  --app-danger: #ff3b30;
+  --app-warning: #f59e0b;
+  --app-running: #3b82f6;
+  --app-accent: #2563eb;
+  --app-tag: #f0f0f2;
+  --app-hover: #d0d0e3;
+  --app-table-hover: #f0f0f2;
+  --app-border: #d0d0d8;
+
+  --shadow-base: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-strong: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-chart-6: var(--chart-6);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-app-bg: var(--app-bg);
+  --color-app-surface: var(--app-surface);
+  --color-app-text: var(--app-text);
+  --color-app-text-muted: var(--app-text-muted);
+  --color-app-accent: var(--app-accent);
+  --color-app-success: var(--app-success);
+  --color-app-danger: var(--app-danger);
+  --color-app-warning: var(--app-warning);
+  --color-app-running: var(--app-running);
+  --color-app-tag: var(--app-tag);
+  --color-app-hover: var(--app-hover);
+  --color-app-table-hover: var(--app-table-hover);
+  --color-app-border: var(--app-border);
+}
