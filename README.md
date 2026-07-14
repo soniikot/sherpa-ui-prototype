@@ -1,8 +1,8 @@
 # sherpa-ui-prototype
 
-Throwaway UI prototype for the **Sherpa Tenant Lifecycle Console** (platform-admin).
+Throwaway UI prototype for the **Sherpa Tenant Lifecycle Console** (platform-admin) and the **tenant workspace portal**.
 
-Not connected to the Sherpa monorepo. Mock data only. Visual language mirrored from prod-dashboard (tokens + thin shadcn-style kit).
+Not connected to the Sherpa monorepo. Mock data only. Visual language mirrored from prod-dashboard (tokens + thin shadcn-style kit). No login.
 
 ## Quick start
 
@@ -10,6 +10,8 @@ Not connected to the Sherpa monorepo. Mock data only. Visual language mirrored f
 npm install
 npm run dev
 ```
+
+From **Tenants**, click a workspace link (e.g. beta) → `/workspace/beta`.
 
 ## Scripts
 

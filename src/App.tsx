@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
 import { AppShell } from "@/layout/AppShell";
+import { WorkspaceShell } from "@/layout/WorkspaceShell";
 import { PlatformAdminPage } from "@/pages/PlatformAdmin/PlatformAdminPage";
+import { WorkspacePortalPage } from "@/pages/WorkspacePortal/WorkspacePortalPage";
 import {
   getInitialTheme,
 } from "@/components/themeToggle/ThemeToggle";
@@ -35,6 +37,10 @@ export default function App() {
       <Routes>
         <Route element={<AppShell />}>
           <Route path="/" element={<PlatformAdminPage />} />
+        </Route>
+        <Route path="/workspace/:slug" element={<WorkspaceShell />}>
+          <Route index element={<WorkspacePortalPage />} />
+          <Route path="team" element={<WorkspacePortalPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

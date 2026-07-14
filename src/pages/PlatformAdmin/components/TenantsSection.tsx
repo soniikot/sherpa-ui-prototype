@@ -1,4 +1,4 @@
-import { ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -82,15 +82,12 @@ export function TenantsSection({
                     </span>
                   </td>
                   <td className="px-3 py-3 align-top">
-                    <a
-                      href={tenant.workspaceHref}
-                      target="_blank"
-                      rel="noreferrer"
+                    <Link
+                      to={`/workspace/${tenant.slug}`}
                       className="inline-flex items-center gap-1.5 font-mono text-xs text-app-accent hover:underline"
                     >
                       {tenant.workspaceHref}
-                      <ExternalLink className="size-3.5 shrink-0" />
-                    </a>
+                    </Link>
                   </td>
                   <td className="px-3 py-3 align-top text-app-text-muted">
                     {tenant.adminEmail}

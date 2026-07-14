@@ -12,6 +12,7 @@ export type TenantStatus = "active" | "suspended" | "provisioning";
 export interface Tenant {
   id: string;
   slug: string;
+  displayName: string;
   status: TenantStatus;
   phaseLabel: string;
   readyUrl: string | null;
@@ -138,6 +139,7 @@ export const MOCK_TENANTS: Tenant[] = [
   {
     id: "acme",
     slug: "acme",
+    displayName: "Acme Corp",
     status: "active",
     phaseLabel: "—",
     readyUrl: "https://acme.lab.7sg.ai",
@@ -148,6 +150,7 @@ export const MOCK_TENANTS: Tenant[] = [
   {
     id: "beta",
     slug: "beta",
+    displayName: "Beta Corp",
     status: "active",
     phaseLabel: "—",
     readyUrl: "https://beta.lab.7sg.ai",

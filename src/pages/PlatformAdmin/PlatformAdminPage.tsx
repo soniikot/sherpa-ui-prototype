@@ -43,6 +43,7 @@ export function PlatformAdminPage() {
     const next: Tenant = {
       id: payload.slug,
       slug: payload.slug,
+      displayName: payload.organizationName,
       status: "active",
       phaseLabel: "—",
       readyUrl: `https://${payload.slug}.lab.7sg.ai`,
