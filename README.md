@@ -21,10 +21,15 @@ npm run dev
 
 ## Deploy (GitHub Pages)
 
-Pushes to `main` build and publish via Actions.
+Published from the `gh-pages` branch.
 
-Live URL (after first deploy):
+**Share link:** https://soniikot.github.io/sherpa-ui-prototype/
 
-https://soniikot.github.io/sherpa-ui-prototype/
+To republish after local changes:
+
+```bash
+GITHUB_PAGES=true npm run build
+# then push the contents of dist/ to the gh-pages branch
+```
 
 See [NOTES.md](./NOTES.md) for prototype decisions and cleanup intent.
