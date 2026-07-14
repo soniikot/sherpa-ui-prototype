@@ -62,7 +62,7 @@ export function TenantsSection({
               <tr className="border-b border-app-border text-[11px] uppercase tracking-wide text-app-text-muted">
                 <th className="px-3 py-2 font-medium">Status</th>
                 <th className="px-3 py-2 font-medium">Cost</th>
-                <th className="px-3 py-2 font-medium">Workspace link</th>
+                <th className="px-3 py-2 font-medium">Workspace</th>
                 <th className="px-3 py-2 font-medium">Admin</th>
                 <th className="px-3 py-2 font-medium">Actions</th>
               </tr>
@@ -84,9 +84,12 @@ export function TenantsSection({
                   <td className="px-3 py-3 align-top">
                     <Link
                       to={`/workspace/${tenant.slug}`}
-                      className="inline-flex items-center gap-1.5 font-mono text-xs text-app-accent hover:underline"
+                      className="inline-flex items-center gap-1.5 text-sm text-app-accent hover:underline"
                     >
-                      {tenant.workspaceHref}
+                      {tenant.displayName}
+                      <span className="font-mono text-xs text-app-text-muted">
+                        /{tenant.slug}
+                      </span>
                     </Link>
                   </td>
                   <td className="px-3 py-3 align-top text-app-text-muted">
