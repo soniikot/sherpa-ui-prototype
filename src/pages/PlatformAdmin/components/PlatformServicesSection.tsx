@@ -4,7 +4,6 @@ import {
   Box,
   DollarSign,
   ExternalLink,
-  Eye,
   HardDrive,
   KeyRound,
   LayoutDashboard,
@@ -26,7 +25,7 @@ const SERVICE_ICONS: Record<string, LucideIcon> = {
   longhorn: HardDrive,
   vault: KeyRound,
   status: Activity,
-  zitadel: Eye,
+  keycloak: KeyRound,
 };
 
 export function PlatformServicesSection({
@@ -35,9 +34,12 @@ export function PlatformServicesSection({
   return (
     <Card className="dark-card border-app-border/80 shadow-none">
       <CardHeader className="px-0 pt-0">
-        <CardTitle className="text-lg font-semibold text-app-text">
-          Platform services — ops plane (Tenant 1), SSO-gated
-        </CardTitle>
+          <CardTitle className="text-lg font-semibold text-app-text">
+            Platform services
+          </CardTitle>
+          <p className="mt-1 text-sm text-app-text-muted">
+            Ops plane health — SSO-gated ingress and direct probes.
+          </p>
       </CardHeader>
       <CardContent className="px-0 pb-0">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

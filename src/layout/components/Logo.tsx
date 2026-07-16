@@ -6,18 +6,18 @@ export function Logo() {
       <Link
         to="/"
         className="flex items-center space-x-4 transition-opacity hover:opacity-80"
-        aria-label="Go to Tenant Lifecycle Console"
+        aria-label="Go to Owner console"
       >
         <img
           src={`${import.meta.env.BASE_URL}logo.svg`}
-          alt="7SG logo"
+          alt="Sherpa Canvas logo"
           className="h-10 w-10 rounded-full md:h-12 md:w-12"
         />
         <div className="hidden md:block">
-          <h1 className="text-xl leading-tight font-bold text-app-text">7SG</h1>
-          <p className="text-xs font-medium text-app-text-muted">
-            Hybrid AI Platform
-          </p>
+          <h1 className="text-xl leading-tight font-bold text-app-text">
+            Sherpa Canvas
+          </h1>
+          <p className="text-xs font-medium text-app-text-muted">Owner console</p>
         </div>
       </Link>
     </div>

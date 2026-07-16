@@ -1,7 +1,14 @@
 import { useState, type FormEvent } from "react";
 import { KeyRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import type { CreateWorkspaceSectionProps } from "@/pages/PlatformAdmin/components/CreateWorkspaceSection.types";
@@ -10,12 +17,29 @@ import {
   workspaceFormSchema,
 } from "@/pages/PlatformAdmin/workspaceForm";
 
-export function CreateWorkspaceSection({ onCreated }: CreateWorkspaceSectionProps) {
+export function CreateWorkspaceSection({
+  open,
+  onOpenChange,
+  onCreated,
+}: CreateWorkspaceSectionProps) {
   const [slug, setSlug] = useState("demo1");
   const [adminEmail, setAdminEmail] = useState("admin@demo1.test");
   const [organizationName, setOrganizationName] = useState("Demo One");
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [tempPassword, setTempPassword] = useState<string | null>(null);
+
+  const resetForm = () => {
+    setSlug("demo1");
+    setAdminEmail("admin@demo1.test");
+    setOrganizationName("Demo One");
+    setFieldErrors({});
+  };
+
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) {
+      resetForm();
+    }
+    onOpenChange(nextOpen);
+  };
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -34,37 +58,29 @@ export function CreateWorkspaceSection({ onCreated }: CreateWorkspaceSectionProp
         }
       }
       setFieldErrors(nextErrors);
-      setTempPassword(null);
       return;
     }
 
     setFieldErrors({});
     const password = generateTempPassword();
-    setTempPassword(password);
     onCreated({ ...parsed.data, tempPassword: password });
   };
 
   return (
-    <Card className="dark-card border-app-border/80 shadow-none">
-      <CardHeader className="px-0 pt-0">
-        <CardTitle className="text-lg font-semibold text-app-text">
-          Create a workspace — provision a new tenant
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4 px-0 pb-0">
-        <div className="rounded-lg border border-app-border bg-app-bg/50 px-4 py-3 text-sm leading-relaxed text-app-text-muted">
-          Each workspace reserves a guaranteed{" "}
-          <span className="font-semibold text-app-success">2 vCPU / 4 GiB</span>{" "}
-          floor (Kueue · cohort{" "}
-          <span className="font-semibold text-app-success">sherpa-fleet</span>,
-          burstable by borrowing idle capacity), with a hard cap of{" "}
-          <span className="font-semibold text-app-success">4 vCPU / 8 GiB</span>{" "}
-          and 20 pods per namespace × 3 (app · model · system).
-        </div>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
+      <DialogContent className="sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>Create tenant</DialogTitle>
+          <DialogDescription>
+            Each workspace reserves a guaranteed 2 vCPU / 4 GiB floor (Kueue ·
+            cohort sherpa-fleet), with a hard cap of 4 vCPU / 8 GiB and 20 pods
+            per namespace × 3 (app · model · system).
+          </DialogDescription>
+        </DialogHeader>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="space-y-2">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2 sm:col-span-2">
               <Label htmlFor="workspace-slug">Workspace slug</Label>
               <Input
                 id="workspace-slug"
@@ -112,23 +128,22 @@ export function CreateWorkspaceSection({ onCreated }: CreateWorkspaceSectionProp
             <KeyRound className="mt-0.5 size-3.5 shrink-0" />
             <span>
               We generate a temporary password for you to give the admin. It is
-              shown below once the workspace is created.
+              shown in a toast once the workspace is created.
             </span>
           </p>
 
-          <Button type="submit">Create workspace</Button>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => handleOpenChange(false)}
+            >
+              Cancel
+            </Button>
+            <Button type="submit">Create workspace</Button>
+          </DialogFooter>
         </form>
-
-        {tempPassword ? (
-          <div className="rounded-lg border border-app-success/40 bg-app-success/10 px-4 py-3 text-sm">
-            <p className="font-medium text-app-success">Workspace created</p>
-            <p className="mt-1 text-app-text-muted">
-              Temporary password:{" "}
-              <code className="font-mono text-app-text">{tempPassword}</code>
-            </p>
-          </div>
-        ) : null}
-      </CardContent>
-    </Card>
+      </DialogContent>
+    </Dialog>
   );
 }

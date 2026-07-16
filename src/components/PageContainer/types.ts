@@ -6,4 +6,5 @@ export interface PageContainerProps {
   children: ReactNode;
   fullWidth?: boolean;
   headerActions?: ReactNode;
+  eyebrow?: string;
 }

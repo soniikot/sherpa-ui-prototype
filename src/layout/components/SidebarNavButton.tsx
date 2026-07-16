@@ -1,5 +1,4 @@
-import type { MouseEventHandler } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import type { NavItem } from "@/nav/navItems";
 import { cn } from "@/lib/utils";
@@ -8,32 +7,23 @@ interface SidebarNavButtonProps {
   item: NavItem;
 }
 
-function isHashActive(pathname: string, hash: string, itemPath: string): boolean {
-  if (!itemPath.includes("#")) {
-    return pathname === itemPath;
-  }
-  const [, itemHash = ""] = itemPath.split("#");
-  return pathname === "/" && hash === `#${itemHash}`;
-}
-
 export function SidebarNavButton({ item }: SidebarNavButtonProps) {
   const location = useLocation();
   const isDisabled = Boolean(item.disabled);
-  const active = !isDisabled && isHashActive(location.pathname, location.hash, item.path);
-
-  const handleClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
-    if (isDisabled) {
-      event.preventDefault();
-    }
-  };
+  const active = !isDisabled && location.pathname === item.path;
 
   return (
-    <NavLink
-      to={item.path}
-      onClick={handleClick}
+    <Link
+      to={isDisabled ? "#" : item.path}
+      onClick={(event) => {
+        if (isDisabled) {
+          event.preventDefault();
+        }
+      }}
       aria-label={
         isDisabled ? `${item.label} (coming soon)` : `Navigate to ${item.label}`
       }
+      aria-current={active ? "page" : undefined}
       aria-disabled={isDisabled}
       tabIndex={isDisabled ? -1 : 0}
       className={cn(
@@ -51,6 +41,6 @@ export function SidebarNavButton({ item }: SidebarNavButtonProps) {
           </Badge>
         ) : null}
       </span>
-    </NavLink>
+    </Link>
   );
 }
