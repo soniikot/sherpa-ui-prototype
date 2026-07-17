@@ -4,13 +4,18 @@ import { Toaster } from "sonner";
 import { AppShell } from "@/layout/AppShell";
 import { WorkspaceShell } from "@/layout/WorkspaceShell";
 import { OverviewPage } from "@/pages/OwnerConsole/OverviewPage";
+import { SignupsPage } from "@/pages/OwnerConsole/SignupsPage";
+import { SignupDetailPage } from "@/pages/OwnerConsole/SignupDetailPage";
 import { TenantsPage } from "@/pages/OwnerConsole/TenantsPage";
 import { CapacityPage } from "@/pages/OwnerConsole/CapacityPage";
 import { ModelsPage } from "@/pages/OwnerConsole/ModelsPage";
 import { CostPage } from "@/pages/OwnerConsole/CostPage";
-import { SecurityPage } from "@/pages/OwnerConsole/SecurityPage";
+import { PoliciesPage } from "@/pages/OwnerConsole/PoliciesPage";
+import { SiemPage } from "@/pages/OwnerConsole/SiemPage";
+import { AlertingPage } from "@/pages/OwnerConsole/AlertingPage";
 import { OperationsPage } from "@/pages/OwnerConsole/OperationsPage";
 import { BackupsPage } from "@/pages/OwnerConsole/BackupsPage";
+import { PlatformIamPage } from "@/pages/OwnerConsole/PlatformIamPage";
 import { WorkspacePortalPage } from "@/pages/WorkspacePortal/WorkspacePortalPage";
 import { getInitialTheme } from "@/components/themeToggle/ThemeToggle";
 import type { ThemeMode } from "@/components/themeToggle/types";
@@ -42,13 +47,19 @@ export default function App() {
       <Routes>
         <Route element={<AppShell />}>
           <Route path="/" element={<OverviewPage />} />
+          <Route path="/signups" element={<SignupsPage />} />
+          <Route path="/signups/:id" element={<SignupDetailPage />} />
           <Route path="/tenants" element={<TenantsPage />} />
           <Route path="/capacity" element={<CapacityPage />} />
           <Route path="/models" element={<ModelsPage />} />
           <Route path="/cost" element={<CostPage />} />
-          <Route path="/security" element={<SecurityPage />} />
+          <Route path="/policies" element={<PoliciesPage />} />
+          <Route path="/siem" element={<SiemPage />} />
+          <Route path="/alerting" element={<AlertingPage />} />
           <Route path="/operations" element={<OperationsPage />} />
           <Route path="/backups" element={<BackupsPage />} />
+          <Route path="/iam" element={<PlatformIamPage />} />
+          <Route path="/security" element={<Navigate to="/policies" replace />} />
         </Route>
         <Route path="/workspace/:slug" element={<WorkspaceShell />}>
           <Route index element={<WorkspacePortalPage />} />

@@ -1,10 +1,14 @@
 import type { ElementType } from "react";
 import {
   Activity,
+  Bell,
   Bot,
+  ClipboardCheck,
   DatabaseBackup,
   Gauge,
+  KeyRound,
   LayoutDashboard,
+  Radar,
   Shield,
   Users,
   Wallet,
@@ -16,16 +20,37 @@ export interface NavItem {
   path: string;
   disabled?: boolean;
   badgeText?: string;
+  /** When set, active if pathname equals path or starts with matchPrefix. */
+  matchPrefix?: string;
 }
 
 /** Matches Sherpa Canvas Owner Console primary nav order. */
 export const ownerNavItems: NavItem[] = [
   { icon: LayoutDashboard, label: "Overview", path: "/" },
+  {
+    icon: ClipboardCheck,
+    label: "Signup review",
+    path: "/signups",
+    matchPrefix: "/signups",
+  },
   { icon: Users, label: "Tenants", path: "/tenants" },
   { icon: Gauge, label: "Capacity & limits", path: "/capacity" },
   { icon: Bot, label: "AI models", path: "/models" },
   { icon: Wallet, label: "Usage & cost", path: "/cost" },
-  { icon: Shield, label: "Security", path: "/security" },
+  {
+    icon: Shield,
+    label: "Policies",
+    path: "/policies",
+    badgeText: "44",
+  },
+  { icon: Radar, label: "SIEM", path: "/siem" },
+  {
+    icon: Bell,
+    label: "Alerting",
+    path: "/alerting",
+    badgeText: "14",
+  },
   { icon: Activity, label: "Operations", path: "/operations" },
   { icon: DatabaseBackup, label: "Backups & DR", path: "/backups" },
+  { icon: KeyRound, label: "Platform IAM", path: "/iam" },
 ];

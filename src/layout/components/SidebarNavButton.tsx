@@ -10,7 +10,12 @@ interface SidebarNavButtonProps {
 export function SidebarNavButton({ item }: SidebarNavButtonProps) {
   const location = useLocation();
   const isDisabled = Boolean(item.disabled);
-  const active = !isDisabled && location.pathname === item.path;
+  const active =
+    !isDisabled &&
+    (item.matchPrefix
+      ? location.pathname === item.path ||
+        location.pathname.startsWith(`${item.matchPrefix}/`)
+      : location.pathname === item.path);
 
   return (
     <Link

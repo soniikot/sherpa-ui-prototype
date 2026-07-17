@@ -12,6 +12,7 @@ export function PageContainer({
   fullWidth = false,
   headerActions,
   eyebrow,
+  showAskSherpa = true,
 }: PageContainerProps) {
   const widthClassName = fullWidth ? "" : "max-w-7xl";
 
@@ -42,10 +43,12 @@ export function PageContainer({
             <div className="order-1 flex w-full flex-wrap items-center justify-end gap-2 sm:order-2 sm:w-auto sm:shrink-0">
               {headerActions}
               <ThemeToggle className="h-9 px-3 text-sm" />
-              <AskSherpaButton
-                onClick={handleAskSherpa}
-                className="h-9 px-3 text-sm"
-              />
+              {showAskSherpa ? (
+                <AskSherpaButton
+                  onClick={handleAskSherpa}
+                  className="h-9 px-3 text-sm"
+                />
+              ) : null}
               <NotificationCenter />
             </div>
           </div>

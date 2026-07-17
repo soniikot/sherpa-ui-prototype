@@ -7,4 +7,5 @@ export interface PageContainerProps {
   fullWidth?: boolean;
   headerActions?: ReactNode;
   eyebrow?: string;
+  showAskSherpa?: boolean;
 }

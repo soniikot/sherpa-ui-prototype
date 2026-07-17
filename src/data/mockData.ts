@@ -4,9 +4,19 @@ import type {
   CapacityHighlight,
   CapacityPlan,
   CapacityPool,
+  CapacityPoolComposition,
   CostTenantRow,
+  CurrentIamSession,
+  FiringAlert,
+  FleetFootprint,
+  FleetPlane,
   MetricCard,
+  OnboardingPlanSlot,
+  PlacementEnvelopeItem,
+  PlatformIdentity,
   PlatformService,
+  PolicyFinding,
+  PolicySummary,
   SecurityFinding,
   Tenant,
   TenantLimitRow,
@@ -18,9 +28,19 @@ export type {
   CapacityHighlight,
   CapacityPlan,
   CapacityPool,
+  CapacityPoolComposition,
   CostTenantRow,
+  CurrentIamSession,
+  FiringAlert,
+  FleetFootprint,
+  FleetPlane,
   MetricCard,
+  OnboardingPlanSlot,
+  PlacementEnvelopeItem,
+  PlatformIdentity,
   PlatformService,
+  PolicyFinding,
+  PolicySummary,
   SecurityFinding,
   Tenant,
   TenantHealth,
@@ -39,6 +59,7 @@ export const MOCK_PLATFORM_SERVICES: PlatformService[] = [
     host: "grafana-ops.lab.7sg.ai",
     href: "https://grafana-ops.lab.7sg.ai",
     status: "up",
+    probe: "302",
   },
   {
     id: "prometheus",
@@ -47,6 +68,7 @@ export const MOCK_PLATFORM_SERVICES: PlatformService[] = [
     host: "prometheus-ops.lab.7sg.ai",
     href: "https://prometheus-ops.lab.7sg.ai",
     status: "up",
+    probe: "302",
   },
   {
     id: "alertmanager",
@@ -55,6 +77,7 @@ export const MOCK_PLATFORM_SERVICES: PlatformService[] = [
     host: "alerts-ops.lab.7sg.ai",
     href: "https://alerts-ops.lab.7sg.ai",
     status: "up",
+    probe: "200",
   },
   {
     id: "opencost",
@@ -63,6 +86,7 @@ export const MOCK_PLATFORM_SERVICES: PlatformService[] = [
     host: "cost-ops.lab.7sg.ai",
     href: "https://cost-ops.lab.7sg.ai",
     status: "up",
+    probe: "200",
   },
   {
     id: "wazuh",
@@ -71,6 +95,7 @@ export const MOCK_PLATFORM_SERVICES: PlatformService[] = [
     host: "wazuh-ops.lab.7sg.ai",
     href: "https://wazuh-ops.lab.7sg.ai",
     status: "up",
+    probe: "302",
   },
   {
     id: "kyverno",
@@ -80,6 +105,7 @@ export const MOCK_PLATFORM_SERVICES: PlatformService[] = [
     host: "policy-ops.lab.7sg.ai",
     href: "https://policy-ops.lab.7sg.ai",
     status: "up",
+    probe: "200",
   },
   {
     id: "hubble",
@@ -88,6 +114,7 @@ export const MOCK_PLATFORM_SERVICES: PlatformService[] = [
     host: "hubble-ops.lab.7sg.ai",
     href: "https://hubble-ops.lab.7sg.ai",
     status: "up",
+    probe: "200",
   },
   {
     id: "longhorn",
@@ -96,6 +123,7 @@ export const MOCK_PLATFORM_SERVICES: PlatformService[] = [
     host: "longhorn-ops.lab.7sg.ai",
     href: "https://longhorn-ops.lab.7sg.ai",
     status: "up",
+    probe: "200",
   },
   {
     id: "vault",
@@ -104,6 +132,7 @@ export const MOCK_PLATFORM_SERVICES: PlatformService[] = [
     host: "vault-ops.lab.7sg.ai",
     href: "https://vault-ops.lab.7sg.ai",
     status: "up",
+    probe: "307",
   },
   {
     id: "status",
@@ -112,6 +141,7 @@ export const MOCK_PLATFORM_SERVICES: PlatformService[] = [
     host: "status.lab.7sg.ai",
     href: "https://status.lab.7sg.ai",
     status: "up",
+    probe: "200",
   },
   {
     id: "keycloak",
@@ -121,6 +151,7 @@ export const MOCK_PLATFORM_SERVICES: PlatformService[] = [
     host: "sso.lab.7sg.ai",
     href: "https://sso.lab.7sg.ai",
     status: "up",
+    probe: "200",
   },
 ];
 
@@ -169,89 +200,268 @@ export const MOCK_TENANTS: Tenant[] = [
 
 export const MOCK_OVERVIEW_METRICS: MetricCard[] = [
   {
-    id: "tenants",
-    label: "Active tenants",
-    value: "2",
-    hint: "4 live tenant records",
-    href: "/tenants",
-  },
-  {
-    id: "services",
-    label: "Service availability",
-    value: "17/17",
-    hint: "Ingress and direct health probes",
+    id: "availability",
+    label: "Platform availability",
+    value: "100%",
+    hint: "17 / 17 services reachable",
     href: "/operations",
+    tone: "good",
   },
   {
-    id: "allocation",
-    label: "Infrastructure allocation",
-    value: "$3.00",
-    hint: "OpenCost · 7d window",
+    id: "cost",
+    label: "Estimated cost",
+    value: "$3.46",
+    hint: "OpenCost · 7d",
     href: "/cost",
+    tone: "neutral",
   },
   {
-    id: "kueue",
-    label: "Kueue pending",
-    value: "0",
-    hint: "Cohort sherpa-fleet",
-    href: "/capacity",
-  },
-  {
-    id: "recovery",
-    label: "Recovery",
-    value: "0 failed",
-    hint: "0 completed backups",
-    href: "/backups",
-  },
-  {
-    id: "models",
-    label: "Model inventory",
-    value: "—",
-    hint: "Reported workloads",
-    href: "/models",
+    id: "tenants",
+    label: "Tenants",
+    value: "4",
+    hint: "2 / 4 healthy · Live workspaces",
+    href: "/tenants",
+    tone: "warning",
   },
 ];
 
 export const MOCK_SECURITY_FINDINGS_COUNT = 44;
 
+export const MOCK_CLUSTER_LABEL = "RKE2 primary";
+
+export const MOCK_SUMMARY_STATUS = "attention";
+
 export const MOCK_CAPACITY_HIGHLIGHTS: CapacityHighlight[] = [
+  {
+    id: "can-onboard",
+    label: "Can onboard now",
+    value: "5",
+    hint: "Starter tenants at 2 vCPU / 4 GiB floor",
+    icon: "plans",
+  },
   {
     id: "cpu-headroom",
     label: "CPU headroom",
     value: "10 vCPU",
-    hint: "6 / 16 reserved",
+    hint: "6 allocated · 4.0 reserve of 20",
     icon: "cpu",
   },
   {
     id: "memory-headroom",
     label: "Memory headroom",
     value: "50.56 GiB",
-    hint: "12 / 62.56 GiB reserved",
+    hint: "12 allocated · 15.6 reserve of 78.2",
     icon: "memory",
   },
   {
-    id: "cpu-pool",
-    label: "CPU pool",
-    value: "4 Ready nodes",
-    hint: "20% safety reserve",
+    id: "kueue-pending",
+    label: "Kueue pending",
+    value: "0",
+    hint: "Cohort sherpa-fleet",
     icon: "pool",
   },
+];
+
+export const MOCK_ONBOARDING_CAPACITY: OnboardingPlanSlot[] = [
   {
-    id: "plans",
-    label: "Plan availability",
-    value: "3/3 plans",
-    hint: "Validated against live floors",
-    icon: "plans",
+    id: "starter",
+    name: "Starter",
+    canOnboard: 5,
+    floor: "2 vCPU / 4 GiB",
+    available: true,
+  },
+  {
+    id: "team",
+    name: "Team",
+    canOnboard: 2,
+    floor: "4 vCPU / 8 GiB",
+    available: true,
+  },
+  {
+    id: "enterprise",
+    name: "Enterprise",
+    canOnboard: 1,
+    floor: "8 vCPU / 16 GiB",
+    available: true,
+  },
+];
+
+export const MOCK_POOL_COMPOSITION: CapacityPoolComposition = {
+  cpu: {
+    allocated: 6,
+    available: 10,
+    reserve: 4,
+    total: 20,
+    unit: "vCPU",
+  },
+  memory: {
+    allocated: 12,
+    available: 50.6,
+    reserve: 15.6,
+    total: 78.2,
+    unit: "GiB",
+  },
+  rawAllocatable: "20 vCPU / 78.2 GiB",
+  schedulableAfterReserve: "16 vCPU / 62.56 GiB",
+  currentTenantFloors: "6 vCPU / 12 GiB",
+  readyCpuNodes: "4",
+};
+
+export const MOCK_PLACEMENT_ENVELOPE: PlacementEnvelopeItem[] = [
+  {
+    id: "rke2",
+    title: "RKE2 primary",
+    detail: "dc-01 · fixed placement",
+    status: "locked",
+  },
+  {
+    id: "cpu-pool",
+    title: "CPU tenant pool",
+    detail: "4 Ready schedulable nodes",
+    status: "available",
+  },
+  {
+    id: "gpu",
+    title: "Managed GPU reservation",
+    detail: "GPU tenant scheduling and reservation not implemented",
+    status: "unavailable",
+  },
+];
+
+export const MOCK_FLEET_FOOTPRINT: FleetFootprint = {
+  cpuTotal: "12.1 vCPU",
+  memoryTotal: "19.2 GiB",
+  cpuShares: [5.38, 5.17, 0.91, 0.7],
+  memoryShares: [6.55, 9.17, 1.82, 1.69],
+};
+
+export const MOCK_FLEET_PLANES: FleetPlane[] = [
+  {
+    id: "system",
+    name: "System (T0)",
+    namespaceCount: 3,
+    cpu: "5.38 vCPU",
+    memory: "6.55 GiB",
+    pods: "59/59",
+    accentClass: "bg-app-text-muted",
+    namespaces: [
+      {
+        name: "kube-system",
+        pods: "27/27",
+        cpu: "2.88",
+        memory: "6.43 GiB",
+        topWorkloads: "sherpa-k8s-cp, cilium-agent, coredns",
+      },
+      {
+        name: "longhorn-system",
+        pods: "24/24",
+        cpu: "1.90",
+        memory: "0.08 GiB",
+        topWorkloads: "longhorn-manager, engine-image",
+      },
+      {
+        name: "ingress-nginx",
+        pods: "8/8",
+        cpu: "0.60",
+        memory: "0.04 GiB",
+        topWorkloads: "ingress-nginx-controller",
+      },
+    ],
+  },
+  {
+    id: "platform",
+    name: "Platform (T1)",
+    namespaceCount: 14,
+    cpu: "5.17 vCPU",
+    memory: "9.17 GiB",
+    pods: "60/63",
+    accentClass: "bg-app-running",
+    namespaces: [
+      {
+        name: "sherpa-platform",
+        pods: "18/18",
+        cpu: "2.10",
+        memory: "3.40 GiB",
+        topWorkloads: "platform-api, platform-ui, keycloak",
+      },
+      {
+        name: "monitoring",
+        pods: "22/24",
+        cpu: "1.80",
+        memory: "3.90 GiB",
+        topWorkloads: "prometheus, grafana, loki",
+      },
+      {
+        name: "opencost",
+        pods: "4/4",
+        cpu: "0.40",
+        memory: "0.60 GiB",
+        topWorkloads: "opencost",
+      },
+    ],
+  },
+  {
+    id: "tenants",
+    name: "Tenants (T2+)",
+    namespaceCount: 10,
+    cpu: "0.91 vCPU",
+    memory: "1.82 GiB",
+    pods: "24/24",
+    accentClass: "bg-app-success",
+    namespaces: [
+      {
+        name: "tn-acme",
+        pods: "12/12",
+        cpu: "0.45",
+        memory: "0.90 GiB",
+        topWorkloads: "workspace-gateway, notebook",
+      },
+      {
+        name: "tn-beta",
+        pods: "12/12",
+        cpu: "0.46",
+        memory: "0.92 GiB",
+        topWorkloads: "workspace-gateway, notebook",
+      },
+    ],
+  },
+  {
+    id: "other",
+    name: "Other",
+    namespaceCount: 4,
+    cpu: "0.70 vCPU",
+    memory: "1.69 GiB",
+    pods: "6/6",
+    accentClass: "bg-app-warning",
+    namespaces: [
+      {
+        name: "cert-manager",
+        pods: "3/3",
+        cpu: "0.20",
+        memory: "0.40 GiB",
+        topWorkloads: "cert-manager, cainjector",
+      },
+      {
+        name: "external-dns",
+        pods: "3/3",
+        cpu: "0.50",
+        memory: "1.29 GiB",
+        topWorkloads: "external-dns",
+      },
+    ],
   },
 ];
 
 export const MOCK_ATTENTION_ITEMS: AttentionItem[] = [
   {
-    id: "security-44",
+    id: "security-posture",
+    level: "critical",
     title: "44 security findings need attention",
     detail:
-      "sherpa-require-requests-limits / autogen-require-cpu-mem-requests-limits",
-    href: "/security",
+      "sherpa-require-requests-limits / autogen-require-cpu-mem-requests-limits, sherpa-require-requests-limits / autogen-require-cpu-mem-requests-limits",
+    meta: "Policies · Kyverno posture",
+    action: "Review",
+    href: "/policies",
   },
 ];
 
@@ -270,24 +480,39 @@ export const MOCK_CAPACITY_POOL: CapacityPool = {
 export const MOCK_CAPACITY_PLANS: CapacityPlan[] = [
   {
     id: "starter",
-    name: "starter",
+    name: "Starter",
     floor: "2 vCPU / 4 GiB",
     cap: "4 vCPU / 8 GiB",
     available: true,
+    canOnboard: 5,
+    cpuRequest: "2 vCPU",
+    memoryRequest: "4 GiB",
+    podLimit: 20,
+    fitNote: "Fits current unreserved headroom",
   },
   {
-    id: "standard",
-    name: "standard",
+    id: "team",
+    name: "Team",
     floor: "4 vCPU / 8 GiB",
     cap: "8 vCPU / 16 GiB",
     available: true,
+    canOnboard: 2,
+    cpuRequest: "4 vCPU",
+    memoryRequest: "8 GiB",
+    podLimit: 40,
+    fitNote: "Fits current unreserved headroom",
   },
   {
-    id: "large",
-    name: "large",
-    floor: "6 vCPU / 12 GiB",
-    cap: "12 vCPU / 24 GiB",
+    id: "enterprise",
+    name: "Enterprise",
+    floor: "8 vCPU / 16 GiB",
+    cap: "16 vCPU / 32 GiB",
     available: true,
+    canOnboard: 1,
+    cpuRequest: "8 vCPU",
+    memoryRequest: "16 GiB",
+    podLimit: 80,
+    fitNote: "Fits current unreserved headroom",
   },
 ];
 
@@ -295,16 +520,22 @@ export const MOCK_TENANT_LIMITS: TenantLimitRow[] = [
   {
     slug: "acme",
     displayName: "Acme Inc",
+    plan: "small",
     cpu: "0.08 / 6 vCPU",
     memory: "0.17 / 12 GiB",
     kueueFloor: "2 vCPU / 4 GiB",
+    queue: "0 admitted · 0 pending",
+    limitStatus: "within_limits",
   },
   {
     slug: "beta",
     displayName: "Beta Corp",
+    plan: "small",
     cpu: "0.08 / 6 vCPU",
     memory: "0.17 / 12 GiB",
     kueueFloor: "2 vCPU / 4 GiB",
+    queue: "0 admitted · 0 pending",
+    limitStatus: "within_limits",
   },
 ];
 
@@ -312,20 +543,36 @@ export const MOCK_COST_TENANTS: CostTenantRow[] = [
   {
     slug: "acme",
     displayName: "Acme Inc",
-    allocation7d: "$0.41",
-    cpuQuota: "6 vCPU",
-    memoryQuota: "12 GiB",
+    allocation7d: "$0.50",
+    cpuQuota: "2 vCPU",
+    memoryQuota: "4 GiB",
     pods: "3",
   },
   {
     slug: "beta",
     displayName: "Beta Corp",
-    allocation7d: "$2.10",
-    cpuQuota: "6 vCPU",
-    memoryQuota: "12 GiB",
+    allocation7d: "$2.01",
+    cpuQuota: "2 vCPU",
+    memoryQuota: "4 GiB",
     pods: "5",
   },
-];
+  {
+    slug: "northstar",
+    displayName: "northstar inc",
+    allocation7d: "$0.54",
+    cpuQuota: "0 vCPU",
+    memoryQuota: "0 GiB",
+    pods: "4",
+  },
+  {
+    slug: "egress",
+    displayName: "egress",
+    allocation7d: "$0.14",
+    cpuQuota: "—",
+    memoryQuota: "—",
+    pods: "2",
+  },
+]
 
 export const MOCK_SECURITY_FINDINGS: SecurityFinding[] = [
   {
@@ -339,5 +586,253 @@ export const MOCK_SECURITY_FINDINGS: SecurityFinding[] = [
     control: "sherpa-require-requests-limits",
     detail: "autogen-require-cpu-mem-requests-limits",
     severity: "high",
+  },
+];
+
+export const MOCK_POLICY_SUMMARY: PolicySummary = {
+  pass: 542,
+  fail: 13,
+  warn: 0,
+  error: 31,
+  skip: 60,
+  policies: 16,
+  reports: 126,
+  findings: 44,
+};
+
+export const MOCK_POLICY_FINDINGS: PolicyFinding[] = [
+  {
+    id: "pf1",
+    policy: "sherpa-require-requests-limits",
+    rule: "autogen-require-cpu-mem-requests-limits",
+    result: "fail",
+    namespace: "tenant-acme",
+    resource: "Deployment/api",
+  },
+  {
+    id: "pf2",
+    policy: "sherpa-require-requests-limits",
+    rule: "autogen-require-cpu-mem-requests-limits",
+    result: "fail",
+    namespace: "tenant-beta",
+    resource: "Deployment/worker",
+  },
+  {
+    id: "pf3",
+    policy: "sherpa-require-tenant-uuid-on-pvc",
+    rule: "pvc-needs-tenant-uuid",
+    result: "fail",
+    namespace: "tenant-acme",
+    resource: "PersistentVolumeClaim/data",
+  },
+  {
+    id: "pf4",
+    policy: "sherpa-require-app-label",
+    rule: "pod-needs-app-label",
+    result: "error",
+    namespace: "monitoring",
+    resource: "Pod/probe",
+  },
+  {
+    id: "pf5",
+    policy: "sherpa-sa-automount-hygiene",
+    rule: "audit-automount-true",
+    result: "error",
+    namespace: "kube-system",
+    resource: "ServiceAccount/default",
+  },
+  {
+    id: "pf6",
+    policy: "sherpa-deny-privileged-pods",
+    rule: "deny-privileged",
+    result: "fail",
+    namespace: "tenant-beta",
+    resource: "Pod/debug",
+  },
+];
+
+export const MOCK_POLICY_NAMES = [
+  "sherpa-require-app-label",
+  "sherpa-require-requests-limits",
+  "sherpa-require-tenant-uuid-on-pvc",
+  "sherpa-sa-automount-hygiene",
+  "sherpa-deny-nodeport-loadbalancer",
+  "sherpa-deny-privileged-pods",
+  "sherpa-disallow-latest-tag",
+  "sherpa-generate-tenant-guardrails",
+  "sherpa-namespace-label-contract",
+  "sherpa-netpol-shape-guard",
+  "sherpa-no-cross-tenant-scheduling",
+  "sherpa-plan-quota-pods",
+  "sherpa-storage-governance",
+  "sherpa-tenant-hostpath-deny",
+  "sherpa-tenant-placement",
+  "sherpa-tenant-registry-allowlist",
+] as const;
+
+export const MOCK_FIRING_ALERTS: FiringAlert[] = [
+  {
+    id: "a1",
+    name: "AlertmanagerFailedToSendAlerts",
+    severity: "warning",
+    summary: "An Alertmanager instance failed to send notifications.",
+    startedAt: "Jul 3, 2026, 5:28 AM",
+    state: "Active",
+  },
+  {
+    id: "a2",
+    name: "KubePersistentVolumeFillingUp",
+    severity: "critical",
+    summary: "PersistentVolume is filling up.",
+    startedAt: "Jul 10, 2026, 5:05 AM",
+    state: "Active",
+  },
+  {
+    id: "a3",
+    name: "TargetDown",
+    severity: "warning",
+    summary: "One or more targets are unreachable.",
+    startedAt: "Jul 3, 2026, 5:32 AM",
+    state: "Active",
+  },
+  {
+    id: "a4",
+    name: "KubeSchedulerDown",
+    severity: "critical",
+    summary: "Target disappeared from Prometheus target discovery.",
+    startedAt: "Jul 3, 2026, 5:37 AM",
+    state: "Active",
+  },
+  {
+    id: "a5",
+    name: "KubePodNotReady",
+    severity: "warning",
+    summary: "Pod has been in a non-ready state for more than 15 minutes.",
+    startedAt: "Jul 16, 2026, 12:26 PM",
+    state: "Active",
+  },
+  {
+    id: "a6",
+    name: "KubeStatefulSetReplicasMismatch",
+    severity: "warning",
+    summary: "StatefulSet has not matched the expected number of replicas.",
+    startedAt: "Jul 14, 2026, 11:04 PM",
+    state: "Active",
+  },
+  {
+    id: "a7",
+    name: "etcdMembersDown",
+    severity: "warning",
+    summary: "etcd cluster members are down.",
+    startedAt: "Jul 3, 2026, 5:42 AM",
+    state: "Active",
+  },
+  {
+    id: "a8",
+    name: "KubeControllerManagerDown",
+    severity: "critical",
+    summary: "Target disappeared from Prometheus target discovery.",
+    startedAt: "Jul 3, 2026, 5:37 AM",
+    state: "Active",
+  },
+  {
+    id: "a9",
+    name: "Watchdog",
+    severity: "none",
+    summary:
+      "An alert that should always be firing to certify that Alertmanager is working properly.",
+    startedAt: "Jul 3, 2026, 5:22 AM",
+    state: "Active",
+  },
+  {
+    id: "a10",
+    name: "etcdInsufficientMembers",
+    severity: "critical",
+    summary: "etcd cluster has insufficient number of members.",
+    startedAt: "Jul 3, 2026, 5:25 AM",
+    state: "Active",
+  },
+  {
+    id: "a11",
+    name: "KubeCPUOvercommit",
+    severity: "warning",
+    summary: "Cluster has overcommitted CPU resource requests.",
+    startedAt: "Jul 16, 2026, 9:39 AM",
+    state: "Active",
+  },
+  {
+    id: "a12",
+    name: "KubeProxyDown",
+    severity: "critical",
+    summary: "Target disappeared from Prometheus target discovery.",
+    startedAt: "Jul 3, 2026, 5:37 AM",
+    state: "Active",
+  },
+  {
+    id: "a13",
+    name: "TargetDown",
+    severity: "warning",
+    summary: "One or more targets are unreachable.",
+    startedAt: "Jul 3, 2026, 5:32 AM",
+    state: "Active",
+  },
+  {
+    id: "a14",
+    name: "TargetDown",
+    severity: "warning",
+    summary: "One or more targets are unreachable.",
+    startedAt: "Jul 3, 2026, 5:32 AM",
+    state: "Active",
+  },
+];
+
+export const MOCK_CURRENT_IAM: CurrentIamSession = {
+  subject: "b18ef911-97c3-45bc-86ba-b84ec8e1fff0",
+  email: "sofia@7sg.ai",
+  plane: "platform",
+  primaryRole: "operator",
+  roles: ["platform-admin", "signup-approver"],
+  permissions: [
+    "alerting.write",
+    "audit.read",
+    "backup.restore",
+    "iam.manage",
+    "platform.read",
+    "security.write",
+    "signup.approve",
+    "signup.read",
+    "tenant.create",
+    "tenant.delete",
+    "tenant.update",
+  ],
+};
+
+export const MOCK_PLATFORM_IDENTITIES: PlatformIdentity[] = [
+  {
+    id: "id1",
+    displayName: "Platform break-glass owner",
+    email: "admin@7sg.ai",
+    subject: "2d376a94-a946-40c9-bd10-61c886874d6e",
+    roles: ["platform-admin", "platform-owner", "signup-approver"],
+    state: "Enabled",
+    updatedAt: "Jul 16, 2026, 12:41 PM",
+  },
+  {
+    id: "id2",
+    displayName: "prashant@7sg.ai",
+    email: "prashant@7sg.ai",
+    subject: "f0a53491-7183-4fb1-81af-11b4e97b5be3",
+    roles: ["platform-admin", "signup-approver"],
+    state: "Enabled",
+    updatedAt: "Jul 16, 2026, 2:13 PM",
+  },
+  {
+    id: "id3",
+    displayName: "sofia@7sg.ai",
+    email: "sofia@7sg.ai",
+    subject: "b18ef911-97c3-45bc-86ba-b84ec8e1fff0",
+    roles: ["platform-admin", "signup-approver"],
+    state: "Enabled",
+    updatedAt: "Jul 16, 2026, 2:40 PM",
   },
 ];

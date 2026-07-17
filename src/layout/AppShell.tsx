@@ -21,7 +21,7 @@ export function AppShell() {
         </nav>
         <SidebarUserMenu
           email={MOCK_OPERATOR_EMAIL}
-          workspaceLabel="Platform owner"
+          workspaceLabel="platform-admin, signup-approver"
           onSignOut={handleSignOut}
         />
       </aside>
