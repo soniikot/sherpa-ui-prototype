@@ -31,15 +31,16 @@ export function AlertingPage() {
       title="Alerting"
       description="Live Alertmanager firing alerts and platform-wide notification routing."
       fullWidth
-      headerActions={
+    >
+      <div className="flex flex-wrap items-center justify-end gap-3">
         <Link
           to="/policies"
-          className="mr-1 text-sm font-medium text-app-accent hover:underline"
+          className="text-sm font-medium text-app-accent hover:underline"
         >
           Policy findings
         </Link>
-      }
-    >
+      </div>
+
       <section
         aria-label="Alerting totals"
         className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"

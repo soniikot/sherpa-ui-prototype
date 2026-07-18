@@ -15,14 +15,6 @@ export function SiemPage() {
       title="SIEM"
       description="Wazuh security events, vulnerability scans, SCA, and file integrity for the platform."
       fullWidth
-      headerActions={
-        <Link
-          to="/alerting"
-          className="mr-1 text-sm font-medium text-app-accent hover:underline"
-        >
-          Configure notifications
-        </Link>
-      }
     >
       <section
         aria-label="SIEM health"

@@ -52,7 +52,7 @@ function buildResult(
       confidence: "High",
       signals: String(Math.max(attention.length, 1)),
       primary: { label: "Open capacity", to: "/capacity" },
-      secondary: { label: "Provision workspace", to: "/tenants?create=1" },
+      secondary: { label: "Create tenant", to: "/tenants?create=1" },
     };
   }
 
@@ -76,10 +76,10 @@ function buildResult(
     return {
       title: "Recent lifecycle activity is quiet",
       detail:
-        "The audit feed has not returned new owner events. Review the owner inbox for the current deterministic risk set.",
+        "The audit feed has not returned new owner events. Review the notification center for the current deterministic risk set.",
       confidence: "Medium",
       signals: String(attention.length),
-      primary: { label: "Open owner inbox", to: "#owner-inbox" },
+      primary: { label: "Open notification center", to: "#owner-inbox" },
       secondary: { label: "View tenants", to: "/tenants" },
     };
   }
@@ -91,7 +91,7 @@ function buildResult(
       confidence: top.level === "critical" ? "High" : "Medium",
       signals: String(attention.length),
       primary: { label: top.action, to: top.href },
-      secondary: { label: "Open signups", to: "/signups" },
+      secondary: { label: "Open tenants", to: "/tenants" },
     };
   }
 

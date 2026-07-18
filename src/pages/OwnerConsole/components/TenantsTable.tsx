@@ -85,9 +85,9 @@ export function TenantsTable({
             <thead>
               <tr className="border-b border-app-border text-[11px] uppercase tracking-wide text-app-text-muted">
                 <th className="px-3 py-2 font-medium">Tenant</th>
+                <th className="px-3 py-2 font-medium">Allocation</th>
                 <th className="px-3 py-2 font-medium">Status</th>
                 <th className="px-3 py-2 font-medium">Health</th>
-                <th className="px-3 py-2 font-medium">Allocation</th>
                 <th className="px-3 py-2 font-medium">Admin</th>
                 <th className="px-3 py-2 font-medium">Actions</th>
               </tr>
@@ -120,12 +120,6 @@ export function TenantsTable({
                       </a>
                     ) : null}
                   </td>
-                  <td className="px-3 py-3 align-top">
-                    <StatusBadge status={tenant.status} />
-                  </td>
-                  <td className="px-3 py-3 align-top">
-                    <HealthBadge health={tenant.health} />
-                  </td>
                   <td className="px-3 py-3 align-top text-xs text-app-text-muted">
                     <p>
                       CPU {tenant.cpuUsed} / {tenant.cpuQuota} vCPU
@@ -133,6 +127,12 @@ export function TenantsTable({
                     <p>
                       RAM {tenant.ramUsed} / {tenant.ramQuota} GiB
                     </p>
+                  </td>
+                  <td className="px-3 py-3 align-top">
+                    <StatusBadge status={tenant.status} />
+                  </td>
+                  <td className="px-3 py-3 align-top">
+                    <HealthBadge health={tenant.health} />
                   </td>
                   <td className="px-3 py-3 align-top text-app-text-muted">
                     {tenant.adminEmail}

@@ -3,6 +3,10 @@ import { ChevronDown, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  sourceMeta,
+  sourceStyles,
+} from "@/components/notifications/sourceMeta";
 import { AskSherpaPanel } from "@/pages/OwnerConsole/components/AskSherpaPanel";
 import type {
   OverviewBriefingProps,
@@ -80,11 +84,14 @@ export function OverviewBriefing({
       : Math.round((healthyServices / totalServices) * 100);
 
   const visibleAttention = acknowledged ? [] : attentionItems;
-  const calloutTitle = visibleAttention.length
-    ? `${visibleAttention.length} item${visibleAttention.length === 1 ? "" : "s"} need owner attention`
-    : "No open attention items";
-  const calloutDetail = visibleAttention.length
-    ? `${visibleAttention
+  const criticalAttention = visibleAttention.filter(
+    (item) => item.level === "critical",
+  );
+  const calloutTitle = criticalAttention.length
+    ? `${criticalAttention.length} critical warning${criticalAttention.length === 1 ? "" : "s"} need attention`
+    : "No critical warnings";
+  const calloutDetail = criticalAttention.length
+    ? `${criticalAttention
         .slice(0, 3)
         .map((item) => item.title)
         .join("; ")}.`
@@ -102,8 +109,8 @@ export function OverviewBriefing({
         aria-label={calloutTitle}
         className={cn(
           "rounded-xl border p-4 sm:p-5",
-          visibleAttention.length
-            ? "border-app-warning/40 bg-app-warning/5"
+          criticalAttention.length
+            ? "border-orange-500/40 bg-orange-500/5"
             : "border-app-border bg-app-surface/40",
         )}
       >
@@ -116,14 +123,16 @@ export function OverviewBriefing({
           </div>
           <div className="flex flex-wrap gap-2">
             <Button type="button" variant="outline" size="sm" asChild>
-              <Link to="/policies">Review risks</Link>
+              <Link to={criticalAttention[0]?.href ?? "/alerting"}>
+                Review risks
+              </Link>
             </Button>
             <Button
               type="button"
               variant="ghost"
               size="sm"
               onClick={onToggleAcknowledge}
-              disabled={attentionItems.length === 0}
+              disabled={criticalAttention.length === 0 && !acknowledged}
             >
               {acknowledged ? "Mark unacknowledged" : "Acknowledge"}
             </Button>
@@ -191,10 +200,10 @@ export function OverviewBriefing({
               <Plus className="size-4" aria-hidden />
             </span>
             <span className="text-sm font-semibold text-app-text">
-              Provision workspace
+              Create tenant
             </span>
             <span className="text-xs text-app-text-muted">
-              Create a new tenant
+              Start a new workspace
             </span>
           </button>
         </div>
@@ -208,7 +217,7 @@ export function OverviewBriefing({
           <CardHeader className="flex flex-row items-start justify-between gap-3 px-0 pt-0">
             <div>
               <CardTitle className="text-lg font-semibold text-app-text">
-                Owner inbox
+                Notification center
               </CardTitle>
               <p className="mt-1 text-sm text-app-text-muted">
                 Prioritized by customer impact and time sensitivity.
@@ -216,7 +225,7 @@ export function OverviewBriefing({
             </div>
             <div className="flex shrink-0 items-center gap-3">
               <Badge variant="outline">{visibleAttention.length} open</Badge>
-              <SectionLink to="/signups">Open signups</SectionLink>
+              <SectionLink to="/tenants">Open tenants</SectionLink>
             </div>
           </CardHeader>
           <CardContent className="space-y-3 px-0 pb-0">
@@ -231,43 +240,56 @@ export function OverviewBriefing({
                 </p>
               </div>
             ) : (
-              visibleAttention.map((item) => (
-                <article
-                  key={item.id}
-                  className={cn(
-                    "flex flex-wrap items-start justify-between gap-3 rounded-xl border p-4",
-                    item.level === "critical"
-                      ? "border-app-danger/30 bg-app-danger/5"
-                      : "border-app-warning/30 bg-app-warning/5",
-                  )}
-                >
-                  <div className="flex min-w-0 items-start gap-3">
-                    <span
-                      className={cn(
-                        "mt-1.5 size-2.5 shrink-0 rounded-full",
-                        item.level === "critical"
-                          ? "bg-app-danger"
-                          : "bg-app-warning",
-                      )}
-                      aria-hidden
-                    />
-                    <div className="min-w-0">
-                      <p className="text-sm font-semibold text-app-text">
-                        {item.title}
-                      </p>
-                      <p className="mt-1 text-sm text-app-text-muted">
-                        {item.detail}
-                      </p>
-                      <p className="mt-1 text-xs text-app-text-muted">
-                        {item.meta}
-                      </p>
+              visibleAttention.map((item) => {
+                const category = sourceStyles(item.source);
+                const source = sourceMeta(item.source);
+                const SourceIcon = source.Icon;
+
+                return (
+                  <article
+                    key={item.id}
+                    className={cn(
+                      "flex flex-col gap-3 rounded-xl border p-4",
+                      category.card,
+                    )}
+                  >
+                    <div className="flex min-w-0 items-start gap-3">
+                      <span
+                        className={cn(
+                          "mt-1.5 size-2.5 shrink-0 rounded-full",
+                          category.dot,
+                        )}
+                        aria-hidden
+                      />
+                      <div className="min-w-0">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <p className="text-sm font-semibold text-app-text">
+                            {item.title}
+                          </p>
+                          <Badge
+                            variant="outline"
+                            className="gap-1 border-app-border bg-app-surface/60 text-[10px] font-medium tracking-wide text-app-text-muted uppercase"
+                          >
+                            <SourceIcon className="size-3" aria-hidden />
+                            {source.label}
+                          </Badge>
+                        </div>
+                        <p className="mt-1 text-sm text-app-text-muted">
+                          {item.detail}
+                        </p>
+                        <p className="mt-1 text-xs text-app-text-muted">
+                          {item.meta}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <Button type="button" variant="ghost" size="sm" asChild>
-                    <Link to={item.href}>{item.action}</Link>
-                  </Button>
-                </article>
-              ))
+                    <div className="flex justify-end">
+                      <Button type="button" variant="ghost" size="sm" asChild>
+                        <Link to={item.href}>{item.action}</Link>
+                      </Button>
+                    </div>
+                  </article>
+                );
+              })
             )}
           </CardContent>
         </Card>

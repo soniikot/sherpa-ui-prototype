@@ -4,7 +4,6 @@ import { Toaster } from "sonner";
 import { AppShell } from "@/layout/AppShell";
 import { WorkspaceShell } from "@/layout/WorkspaceShell";
 import { OverviewPage } from "@/pages/OwnerConsole/OverviewPage";
-import { SignupsPage } from "@/pages/OwnerConsole/SignupsPage";
 import { SignupDetailPage } from "@/pages/OwnerConsole/SignupDetailPage";
 import { TenantsPage } from "@/pages/OwnerConsole/TenantsPage";
 import { CapacityPage } from "@/pages/OwnerConsole/CapacityPage";
@@ -47,7 +46,7 @@ export default function App() {
       <Routes>
         <Route element={<AppShell />}>
           <Route path="/" element={<OverviewPage />} />
-          <Route path="/signups" element={<SignupsPage />} />
+          <Route path="/signups" element={<Navigate to="/tenants" replace />} />
           <Route path="/signups/:id" element={<SignupDetailPage />} />
           <Route path="/tenants" element={<TenantsPage />} />
           <Route path="/capacity" element={<CapacityPage />} />

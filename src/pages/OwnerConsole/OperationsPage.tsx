@@ -29,34 +29,25 @@ export function OperationsPage() {
     return true;
   });
 
-  const updatedAt = new Intl.DateTimeFormat(undefined, {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date());
-
   return (
     <PageContainer
       eyebrow="Operations plane"
       title="Platform operations"
       description="Service health first; deep links stay available in context."
       fullWidth
-      headerActions={
-        <div className="mr-1 flex flex-wrap items-center gap-3">
-          <p className="text-xs text-app-text-muted">Updated {updatedAt}</p>
-          <a
-            href="https://grafana-ops.lab.7sg.ai"
-            target="_blank"
-            rel="noreferrer"
-            className="text-sm font-medium text-app-accent hover:underline"
-          >
-            Open Grafana
-          </a>
-        </div>
-      }
     >
+      <div className="flex flex-wrap items-center justify-end gap-3">
+        <a
+          href="https://grafana-ops.lab.7sg.ai"
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center gap-1 text-sm font-medium text-app-accent hover:underline"
+        >
+          Open Grafana
+          <ExternalLink className="size-3.5 opacity-70" />
+        </a>
+      </div>
+
       <section
         aria-label="Operations metrics"
         className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"

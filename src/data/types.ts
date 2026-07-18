@@ -58,11 +58,15 @@ export interface CapacityHighlight {
   icon: "cpu" | "memory" | "pool" | "plans";
 }
 
-export type AttentionLevel = "critical" | "warning";
+export type AttentionLevel = "critical" | "warning" | "info";
+
+/** Where an owner-inbox notification originates. */
+export type AttentionSource = "tenant" | "policy" | "alerting";
 
 export interface AttentionItem {
   id: string;
   level: AttentionLevel;
+  source: AttentionSource;
   title: string;
   detail: string;
   meta: string;

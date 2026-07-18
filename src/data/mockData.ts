@@ -455,13 +455,25 @@ export const MOCK_FLEET_PLANES: FleetPlane[] = [
 export const MOCK_ATTENTION_ITEMS: AttentionItem[] = [
   {
     id: "security-posture",
-    level: "critical",
+    level: "warning",
+    source: "policy",
     title: "44 security findings need attention",
     detail:
       "sherpa-require-requests-limits / autogen-require-cpu-mem-requests-limits, sherpa-require-requests-limits / autogen-require-cpu-mem-requests-limits",
     meta: "Policies · Kyverno posture",
     action: "Review",
     href: "/policies",
+  },
+  {
+    id: "firing-alerts",
+    level: "critical",
+    source: "alerting",
+    title: "3 critical alerts are firing",
+    detail:
+      "KubePersistentVolumeFillingUp, KubeSchedulerDown, KubeControllerManagerDown",
+    meta: "Alerting · Alertmanager",
+    action: "Review",
+    href: "/alerting",
   },
 ];
 

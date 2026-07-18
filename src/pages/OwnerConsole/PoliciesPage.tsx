@@ -97,23 +97,16 @@ export function PoliciesPage() {
       title="Policies"
       description="Live Kyverno PolicyReport pass/fail posture across namespaces and cluster reports."
       fullWidth
-      headerActions={
-        <div className="mr-1 flex flex-wrap items-center gap-3">
-          <Link
-            to="/alerting"
-            className="text-sm font-medium text-app-accent hover:underline"
-          >
-            Configure notifications
-          </Link>
-          <Link
-            to="/siem"
-            className="text-sm font-medium text-app-accent hover:underline"
-          >
-            SIEM
-          </Link>
-        </div>
-      }
     >
+      <div className="flex flex-wrap items-center justify-end gap-3">
+        <Link
+          to="/alerting"
+          className="text-sm font-medium text-app-accent hover:underline"
+        >
+          Configure notifications
+        </Link>
+      </div>
+
       <section
         aria-label="Kyverno policy totals"
         className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"

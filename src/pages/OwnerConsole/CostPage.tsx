@@ -19,23 +19,15 @@ const OPEN_COST_HREF = "https://cost-ops.lab.7sg.ai";
 const GRAFANA_HREF = "https://grafana-ops.lab.7sg.ai";
 
 export function CostPage() {
-  const updatedAt = new Intl.DateTimeFormat(undefined, {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date());
-
   return (
     <PageContainer
       eyebrow="FinOps"
       title="Usage & cost"
       description="Estimated infrastructure allocation from OpenCost and reservation pressure from Kueue."
       fullWidth
-      headerActions={
-        <div className="mr-1 flex flex-wrap items-center justify-end gap-3">
-          <p className="text-xs text-app-text-muted">Updated {updatedAt}</p>
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-4">
           <a
             href={OPEN_COST_HREF}
             target="_blank"
@@ -54,20 +46,20 @@ export function CostPage() {
             Open Grafana
             <ExternalLink className="size-3.5 opacity-70" />
           </a>
-          <Button
-            type="button"
-            className="h-9"
-            onClick={() =>
-              toast.message("Export report is not wired yet", {
-                description: "Deferred in this prototype.",
-              })
-            }
-          >
-            Export report
-          </Button>
         </div>
-      }
-    >
+        <Button
+          type="button"
+          className="h-9"
+          onClick={() =>
+            toast.message("Export report is not wired yet", {
+              description: "Deferred in this prototype.",
+            })
+          }
+        >
+          Export report
+        </Button>
+      </div>
+
       <CostMetrics metrics={MOCK_COST_METRICS} />
       <AllocationByPlane
         planes={MOCK_COST_PLANES}

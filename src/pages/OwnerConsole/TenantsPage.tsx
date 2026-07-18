@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { MOCK_TENANTS, type Tenant } from "@/data/mockData";
 import { CreateWorkspaceSection } from "@/pages/PlatformAdmin/components/CreateWorkspaceSection";
+import { PendingSignupsSection } from "@/pages/OwnerConsole/components/PendingSignupsSection";
 import { TenantsTable } from "@/pages/OwnerConsole/components/TenantsTable";
 
 export function TenantsPage() {
@@ -83,7 +84,7 @@ export function TenantsPage() {
     <PageContainer
       eyebrow="Tenant lifecycle"
       title="Tenants"
-      description="Create and operate workspaces using the live tenant controller."
+      description="Operate live workspaces, then review pending signup requests."
       fullWidth
     >
       <Card className="dark-card border-app-border/80 shadow-none">
@@ -189,6 +190,8 @@ export function TenantsPage() {
           ) : null}
         </CardContent>
       </Card>
+
+      <PendingSignupsSection />
 
       <CreateWorkspaceSection
         open={showCreate}

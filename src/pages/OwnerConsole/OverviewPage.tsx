@@ -37,15 +37,16 @@ export function OverviewPage() {
     if (pendingSignups.length > 0) {
       items.unshift({
         id: "signup-queue",
-        level: "warning",
+        level: "info",
+        source: "tenant",
         title: `${pendingSignups.length} signup request${pendingSignups.length === 1 ? "" : "s"} need review`,
         detail: pendingSignups
           .slice(0, 3)
           .map((item) => `${item.orgName} (${item.slug})`)
           .join(", "),
-        meta: "Signup review · pending queue",
+        meta: "Tenants · pending queue",
         action: "Review",
-        href: "/signups",
+        href: "/tenants",
       });
     }
 

@@ -3,7 +3,6 @@ import {
   Activity,
   Bell,
   Bot,
-  ClipboardCheck,
   DatabaseBackup,
   Gauge,
   KeyRound,
@@ -28,12 +27,11 @@ export interface NavItem {
 export const ownerNavItems: NavItem[] = [
   { icon: LayoutDashboard, label: "Overview", path: "/" },
   {
-    icon: ClipboardCheck,
-    label: "Signup review",
-    path: "/signups",
+    icon: Users,
+    label: "Tenants",
+    path: "/tenants",
     matchPrefix: "/signups",
   },
-  { icon: Users, label: "Tenants", path: "/tenants" },
   { icon: Gauge, label: "Capacity & limits", path: "/capacity" },
   { icon: Bot, label: "AI models", path: "/models" },
   { icon: Wallet, label: "Usage & cost", path: "/cost" },

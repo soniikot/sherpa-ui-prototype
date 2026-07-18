@@ -12,7 +12,7 @@ export function SidebarNavSections() {
   return (
     <div className="space-y-2 p-4 md:p-6">
       {ownerNavItems.map((item) => {
-        if (item.path !== "/signups") {
+        if (item.path !== "/tenants") {
           return <SidebarNavButton key={item.label} item={item} />;
         }
 

@@ -36,9 +36,9 @@ export function SignupDetailPage() {
         fullWidth
         headerActions={
           <Button type="button" variant="outline" className="gap-2" asChild>
-            <Link to="/signups">
+            <Link to="/tenants">
               <ArrowLeft className="h-4 w-4" />
-              Back to queue
+              Back to tenants
             </Link>
           </Button>
         }
@@ -67,9 +67,9 @@ export function SignupDetailPage() {
       fullWidth
       headerActions={
         <Button type="button" variant="outline" className="gap-2" asChild>
-          <Link to="/signups">
+          <Link to="/tenants">
             <ArrowLeft className="h-4 w-4" />
-            Back to queue
+            Back to tenants
           </Link>
         </Button>
       }

@@ -13,23 +13,12 @@ import { PoolAndPlacement } from "@/pages/OwnerConsole/components/capacity/PoolA
 import { TenantLimitsTable } from "@/pages/OwnerConsole/components/capacity/TenantLimitsTable";
 
 export function CapacityPage() {
-  const updatedAt = new Intl.DateTimeFormat(undefined, {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  }).format(new Date());
-
   return (
     <PageContainer
       eyebrow="Capacity and scheduling"
       title="Capacity & limits"
       description="Live CPU-pool headroom, plan availability, tenant quotas, and Kueue reservation pressure."
       fullWidth
-      headerActions={
-        <p className="mr-1 text-xs text-app-text-muted">Updated {updatedAt}</p>
-      }
     >
       <section
         aria-label="Capacity highlights"
